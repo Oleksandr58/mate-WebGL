@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>WebGL!</title>
+</head>
+<body>
+<canvas id="canvas" width="760" height="400">Your browser don't support canvas</canvas>
+<!-- fragment shaders -->
+<script id="shader-fs" type="x-shader/x-fragment">
+  void main(void) {
+    gl_FragColor = vec4(0.86, 0.92, 0.52, 1.0);
+  }
+</script>
+<!-- vertex shaders -->
+<script id="shader-vs" type="x-shader/x-vertex">
+  attribute vec3 aVertexPosition;
+  void main(void) {
+    gl_Position = vec4(aVertexPosition, 1.0);
+  }
+</script>
+<script type="text/javascript">
+var gl;
+var shaderProgram;
+var vertexBuffer;
+// init shaders
+function initShaders() {
+    // get shaders
+    var fragmentShader = getShader(gl.FRAGMENT_SHADER, 'shader-fs');
+    var vertexShader = getShader(gl.VERTEX_SHADER, 'shader-vs');
+    // create a program for shaders
+    shaderProgram = gl.createProgram();
+    // прикрепляем к ней шейдеры
+    gl.attachShader(shaderProgram, vertexShader);
+    gl.attachShader(shaderProgram, fragmentShader);
+    // connect program with webgl's context
+    gl.linkProgram(shaderProgram);
+      
+    if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
+        alert("Не удалсь установить шейдеры");
+    }
+      
+    gl.useProgram(shaderProgram);
+    // install program's atribbute
+    shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "aVertexPosition");
+    // make atribbute free
+    gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
+}
+// create shaders with type and id
+function getShader(type,id) {
+    var source = document.getElementById(id).innerHTML;
+    // create shaders
+    var shader = gl.createShader(type);
+    // where from shader
+    gl.shaderSource(shader, source);
+    // compile
+    gl.compileShader(shader);
+   
+    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+        alert("Error comlpile shader: " + gl.getShaderInfoLog(shader));
+        gl.deleteShader(shader);   
+        return null;
+    }
+    return shader;  
+}
+// init shader's buffers
+function initBuffers() {
+ // init shader's buffers
+  vertexBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+  // coordinate of object
+  var triangleVertices = [
+         0.0,  0.5,  0.0,
+        -0.5, -0.5,  0.0,
+         0.5, -0.5,  0.0
+  ];
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(triangleVertices), gl.STATIC_DRAW);
+  // how many points
+  vertexBuffer.itemSize = 3;
+  vertexBuffer.numberOfItems = 3;
+}
+
+function draw() {    
+    // install viewport draw
+    gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
+ 
+    gl.clear(gl.COLOR_BUFFER_BIT);
+   
+    // put 3 dimension
+    gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, 
+                         vertexBuffer.itemSize, gl.FLOAT, false, 0, 0);
+    // отрисовка примитивов - треугольников          
+    gl.drawArrays(gl.TRIANGLES, 0, vertexBuffer.numberOfItems);
+}
+  
+window.onload=function(){
+    // get element canvas
+    var canvas = document.getElementById("canvas");
+    try {
+        // Put the standart WebGL
+        // If don't have standart, put experimental
+        gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+    }
+    catch(e) {}
+   
+    // If don't have WebGL
+      if (!gl) {
+        alert("Your browser don't support WebGL");
+      }
+    if(gl){
+        // install viewport draw
+        gl.viewportWidth = canvas.width;
+        gl.viewportHeight = canvas.height;
+        // install shaders
+        initShaders();
+        // install vertexes
+        initBuffers();
+        // background
+        gl.clearColor(1.0, 0.38, 0.0, 1.);
+        // drawing
+        draw();  
+    }
+}
+</script>
+
+<style
+</body>
+</html>

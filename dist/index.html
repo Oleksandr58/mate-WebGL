@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link type="text/css" href="font-awesome/css/font-awesome.min.css" rel="stylesheet"> 
+    <link type="text/css" href="css/main.css" rel="stylesheet" media="screen">
+  </head>
+  
+  <body>
+    <main>        
+      <article id="history">
+          <h2>A little history</h2>
+          <p>WebGL originated from experiments on the Canvas 3D American developer of Serbian 
+            origin Vladimir Vukicevic from Mozilla in 2006. Then developers of browsers 
+            Opera and Mozilla began to create their own WebGL implementations. And later a working 
+            group was organized with the participation of the largest developers of browsers Apple, 
+            Google, Mozilla, Opera to work on the specification of technology. And on March 3, 2011, 
+            the WebGL 1.0 specification was introduced.</p>
+        </article>
+  
+        <article id="what__is">
+          <h2>What is the WebGL?</h2>
+          <p>WebGL (Web-based Graphics Library) is a technology based on OpenGL ES 2.0 and is designed for graphic design and 
+            interactive display of 2D and 3D graphics in web browsers. Any plug-ins 
+            or libraries are not required to work with this technology. All WebGL-based Web application
+            work is based on the JavaScript code, and some code-shader elements can be executed directly 
+            on graphics cards on video cards, allowing developers to gain access to additional computer 
+            resources and increase performance. Developers can use HTML / CSS / JavaScript standard 
+            web technologies to create applications, and also use accelerated graphics.
+          <br><br>
+          WebGL runs on the GPU on your computer. As such you need to provide the code that runs on that GPU. 
+          You provide that code in the form of pairs of functions. Those 2 functions are called a vertex shader 
+          and a fragment shader and they are each written in a very strictly typed C/C++ like language called GLSL.
+          (GL Shader Language). Paired together they are called a program.</p>
+          <img src="img/caniuse.jpg" alt="Can I use WebGL?">
+  
+          <img src="img/caniuse_2.0.jpg" alt="Can I use WebGL 2.0?">
+  
+          <div class="test__webgl">
+           <a href="https://get.webgl.org" target="_blank">Website to testing</a>
+          </div>
+  
+          <iframe width="100%" height="400px" src="html/test/index.html"></iframe>
+        </article>
+  
+        <article id="shaders">
+            <h2>Shaders</h2>
+            <p>WebGL runs on the GPU on your computer. As such you need to provide the code 
+              that runs on that GPU. You provide that code in the form of pairs of functions. 
+              Those 2 functions are called a vertex shader and a fragment shader and they are 
+              each written in a very strictly typed C/C++ like language called GLSL. (GL Shader Language). 
+              Paired together they are called a program.
+  
+              <iframe id="triangle" width="100%" height="450px" src="html/triangle/index.html"></iframe>
+  
+              <textarea><!DOCTYPE html>
+                <html>
+                <head>
+                <title>WebGL!</title>
+                </head>
+                <body>
+                <canvas id="canvas" width="760" height="400">Your browser don't support canvas</canvas>
+                <!-- fragment shaders -->
+                <script id="shader-fs" type="x-shader/x-fragment">
+                  void main(void) {
+                    gl_FragColor = vec4(0.86, 0.92, 0.52, 1.0);
+                  }
+                </script>
+                <!-- vertex shaders -->
+                <script id="shader-vs" type="x-shader/x-vertex">
+                  attribute vec3 aVertexPosition;
+                  void main(void) {
+                    gl_Position = vec4(aVertexPosition, 1.0);
+                  }
+                </script>
+                <script type="text/javascript">
+                var gl;
+                var shaderProgram;
+                var vertexBuffer;
+                // init shaders
+                function initShaders() {
+                    // get shaders
+                    var fragmentShader = getShader(gl.FRAGMENT_SHADER, 'shader-fs');
+                    var vertexShader = getShader(gl.VERTEX_SHADER, 'shader-vs');
+                    // create a program for shaders
+                    shaderProgram = gl.createProgram();
+                    // прикрепляем к ней шейдеры
+                    gl.attachShader(shaderProgram, vertexShader);
+                    gl.attachShader(shaderProgram, fragmentShader);
+                    // connect program with webgl's context
+                    gl.linkProgram(shaderProgram);
+                      
+                    if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
+                        alert("Не удалсь установить шейдеры");
+                    }
+                      
+                    gl.useProgram(shaderProgram);
+                    // install program's atribbute
+                    shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "aVertexPosition");
+                    // make atribbute free
+                    gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
+                }
+                // create shaders with type and id
+                function getShader(type,id) {
+                    var source = document.getElementById(id).innerHTML;
+                    // create shaders
+                    var shader = gl.createShader(type);
+                    // where from shader
+                    gl.shaderSource(shader, source);
+                    // compile
+                    gl.compileShader(shader);
+                   
+                    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+                        alert("Error comlpile shader: " + gl.getShaderInfoLog(shader));
+                        gl.deleteShader(shader);   
+                        return null;
+                    }
+                    return shader;  
+                }
+                // init shader's buffers
+                function initBuffers() {
+                 // init shader's buffers
+                  vertexBuffer = gl.createBuffer();
+                  gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+                  // coordinate of object
+                  var triangleVertices = [
+                         0.0,  0.5,  0.0,
+                        -0.5, -0.5,  0.0,
+                         0.5, -0.5,  0.0
+                  ];
+                  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(triangleVertices), gl.STATIC_DRAW);
+                  // how many points
+                  vertexBuffer.itemSize = 3;
+                  vertexBuffer.numberOfItems = 3;
+                }
+                
+                function draw() {    
+                    // install viewport draw
+                    gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
+                 
+                    gl.clear(gl.COLOR_BUFFER_BIT);
+                   
+                    // put 3 dimension
+                    gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, 
+                                         vertexBuffer.itemSize, gl.FLOAT, false, 0, 0);
+                    // отрисовка примитивов - треугольников          
+                    gl.drawArrays(gl.TRIANGLES, 0, vertexBuffer.numberOfItems);
+                }
+                  
+                window.onload=function(){
+                    // get element canvas
+                    var canvas = document.getElementById("canvas");
+                    try {
+                        // Put the standart WebGL
+                        // If don't have standart, put experimental
+                        gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+                    }
+                    catch(e) {}
+                   
+                    // If don't have WebGL
+                      if (!gl) {
+                        alert("Your browser don't support WebGL");
+                      }
+                    if(gl){
+                        // install viewport draw
+                        gl.viewportWidth = canvas.width;
+                        gl.viewportHeight = canvas.height;
+                        // install shaders
+                        initShaders();
+                        // install vertexes
+                        initBuffers();
+                        // background
+                        gl.clearColor(1.0, 0.38, 0.0, 1.);
+                        // drawing
+                        draw();  
+                    }
+                }
+                </script>
+                </body>
+                </html></textarea>
+            </p>
+          </article>
+
+        <article id="triangles">
+        <h2>Why use triangle?</h2>
+        <p>Triangles can never be non-planar; anything with more than 3 points
+          can be non-planar and thus un-renderable unless converted to triangles.
+
+          <br><br>
+            
+          For example: A square is two triangles that are on the same plane, if 
+          all the points that make up the square are co-planar. It takes a lot of 
+          calculations to make sure all the points are co-planar, thus all polygons 
+          that are greater than 3 points are pre-calculated by decimating them into 
+          triangles and tested to make sure all the points are co-planar once, instead 
+          of on every frame that gets rendered</p>
+          <figure class="mesh__img">
+            <img class="triangles__img" src="img/rabbit.png" alt="rabbit">
+            <img class="triangles__img" src="img/dolphin.png" alt="dolphin">
+          </figure>
+      </article>
+
+      <article id="profit">
+          <h2>Profit</h2>
+          <ul>
+            <li>Cross-browser compatibility and lack of binding to a certain platform. 
+              Windows, MacOS, Linux - all this is not important, the main thing is that 
+              your browser supports WebGL.</li>
+            <li>Using JavaScript, which is fairly common.</li>
+            <li>Since WebGL uses a graphics processor on a video card (GPU) for graphics rendering, 
+              this technology is characterized by high productivity, which is comparable to the 
+              performance of native applications.</li>
+          </ul>
+        </article>
+
+      <article id="examples">
+          <h2>Examples</h2>
+
+          <h3>My attempts</h3>
+          <div class="myexamples">
+            <iframe src="html/Wave/index.html"></iframe>
+            <iframe src="html/Rain/index.html"></iframe>
+            <iframe src="html/Circle from corner/index.html"></iframe>
+            <iframe src="html/Circle from center/index.html"></iframe>
+            <iframe src="html/Circle with noise/index.html"></iframe>
+            <iframe src="html/Circle with Brownian motion/index.html"></iframe>
+          </div>
+
+          <h3>Real job</h3>
+          <div class="human__examples">
+            <a href="http://www.bongiovi.tw/experiments/webgl/blossom/" target="_blank">Drop leafs from tree</a>
+            <a href="http://www.spacegoo.com/wingsuit/#" target="_blank">Fly pinguin</a>
+            <a href="http://madebyevan.com/webgl-water/" target="_blank">Water in pull</a>
+            <a href="http://1000.chromeexperiments.com"  target="_blank">Google for 1000 release</a>
+            <a href="http://digital.eleks.com/mvr/" target="_blank">BMW - for phone</a>
+          </div>
+
+          <h3>Useful websites</h3>
+          <div class="human__examples">
+            <a href="https://shaderfrog.com/app/" target="_blank">Shader frog</a>
+            <a href="https://experiments.withgoogle.com/chrome"  target="_blank">Chrome experiments</a>
+            <a href="https://threejs.org"  target="_blank">Three JS</a>
+          </div>
+        </article>
+    </main>
+
+    <aside>
+      <figure>
+        <img src="img/dino.gif" alt="Dino-webGL">
+        <figcaption id="dino__speak">
+          <span class="dino__text">Hi, what do you want?</span>
+          <br>
+          <span class="close__aside" onclick="close__aside();">You're tired me. Get out!</span>          
+          <div class="dot"></div>
+        </figcaption>
+      </figure>
+      <span id="open__aside" onclick="open__aside();">&#8656;</span>     
+      <ol>
+        <a href="#history"><li>A little history.</li></a>
+        <a href="#what__is"><li>What is the WebGL?</li></a>
+        <a href="#shaders"><li>Shaders.</li></a>
+        <a href="#triangles"><li>Why use triangle?</li></a>
+        <a href="#profit"><li>Profit.</li></a>
+        <a href="#examples"><li>Examples.</li></a>
+      </ol>
+    </aside>
+
+    <script src="js/three.min.js"></script>  
+    <script src="js/script.js"></script>    
+  </body>
+  <html>
