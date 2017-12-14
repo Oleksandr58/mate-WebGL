@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>WebGL performance</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link type="text/css" href="font-awesome/css/font-awesome.min.css" rel="stylesheet"> 
+    <link rel="shortcut icon" href="img/logo.ico" type="image/x-icon">
     <link type="text/css" href="css/main.css" rel="stylesheet" media="screen">
   </head>
   
@@ -39,8 +40,9 @@
           <div class="test__webgl">
            <a href="https://get.webgl.org" target="_blank">Website to testing</a>
           </div>
-  
-          <iframe width="100%" height="400px" src="html/test/index.html"></iframe>
+          <div class="test__frame">
+            <iframe width="790px" height="400px" src="html/test/index.html"></iframe>
+          </div>
         </article>
   
         <article id="shaders">
@@ -50,9 +52,9 @@
               Those 2 functions are called a vertex shader and a fragment shader and they are 
               each written in a very strictly typed C/C++ like language called GLSL. (GL Shader Language). 
               Paired together they are called a program.
-  
-              <iframe id="triangle" width="100%" height="450px" src="html/triangle/index.html"></iframe>
-  
+              <div class="triangle__frame">
+                <iframe id="triangle" width="760px" height="450px" src="html/triangle/index.html"></iframe>
+              </div>
               <textarea><!DOCTYPE html>
                 <html>
                 <head>
@@ -265,7 +267,6 @@
       </ol>
     </aside>
 
-    <script src="js/three.min.js"></script>  
     <script src="js/script.js"></script>    
   </body>
   <html>

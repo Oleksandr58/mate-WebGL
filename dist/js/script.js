@@ -11,3 +11,6 @@ function open__aside() {
     document.querySelector('main').style.width = 'calc(73% - 2px)';
     document.querySelector('aside').style.width = '25%';
 }
+
+var articles = document.querySelectorAll('article');
+

@@ -79,7 +79,7 @@
         float r = length(p);
 
         r = log(sqrt(r));
-        return abs(mod(4. * r, PI * 2.) - PI);
+        return abs(mod(40. * r, PI * 2.) - PI);
       }
 
       void main() {
@@ -90,11 +90,11 @@
 
         float rz = 1.;
 
-        p /= exp(mod(uTime * .5, PI) );
+        p /= exp(mod(uTime * 2.5, PI) );
 
         rz *= abs(circ(p));
 
-        vec3 color = vec3(0.2, 0.1, 1.) / rz;
+        vec3 color = vec3(1., 0.32, 0.) / rz;
 
         gl_FragColor = vec4(color, 1.);
 
@@ -183,7 +183,7 @@
 
         resolution = [canvas.width, canvas.height];
 
-        time = (Date.now() -startTime) / 1000
+        time = (Date.now() -startTime) / 1000;
 
         drawScene();
       }

@@ -206,3 +206,11 @@ main {
 
 #triangles {
   margin-top: 3200px; }
+
+.triangle__frame {
+  width: 770px;
+  margin: 0 auto; }
+
+.test__frame {
+  width: 790px;
+  margin: 0 auto; }
