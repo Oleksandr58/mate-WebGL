@@ -198,19 +198,5 @@ main {
     font-size: 20px;
     line-height: 30px; }
 
-#history, #what__is, #shaders, #triangles, #profit, #examples {
-  height: 1000px; }
-
-#shaders {
-  margin-top: 1500px; }
-
-#triangles {
-  margin-top: 3200px; }
-
-.triangle__frame {
-  width: 770px;
-  margin: 0 auto; }
-
-.test__frame {
-  width: 790px;
-  margin: 0 auto; }
+#history, #what__is, #shaders, #triangles, #profit {
+  margin-bottom: 500px; }
