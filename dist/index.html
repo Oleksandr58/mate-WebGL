@@ -44,6 +44,25 @@
             <iframe width="790px" height="400px" src="html/test/index.html"></iframe>
           </div>
         </article>
+      
+       <article id="triangles">
+        <h2>Why use triangle?</h2>
+        <p>Triangles can never be non-planar; anything with more than 3 points
+          can be non-planar and thus un-renderable unless converted to triangles.
+
+          <br><br>
+            
+          For example: A square is two triangles that are on the same plane, if 
+          all the points that make up the square are co-planar. It takes a lot of 
+          calculations to make sure all the points are co-planar, thus all polygons 
+          that are greater than 3 points are pre-calculated by decimating them into 
+          triangles and tested to make sure all the points are co-planar once, instead 
+          of on every frame that gets rendered</p>
+          <figure class="mesh__img">
+            <img class="triangles__img" src="img/rabbit.png" alt="rabbit">
+            <img class="triangles__img" src="img/dolphin.png" alt="dolphin">
+          </figure>
+      </article>
   
         <article id="shaders">
             <h2>Shaders</h2>
@@ -181,26 +200,7 @@
                 </body>
                 </html></textarea>
             </p>
-          </article>
-
-        <article id="triangles">
-        <h2>Why use triangle?</h2>
-        <p>Triangles can never be non-planar; anything with more than 3 points
-          can be non-planar and thus un-renderable unless converted to triangles.
-
-          <br><br>
-            
-          For example: A square is two triangles that are on the same plane, if 
-          all the points that make up the square are co-planar. It takes a lot of 
-          calculations to make sure all the points are co-planar, thus all polygons 
-          that are greater than 3 points are pre-calculated by decimating them into 
-          triangles and tested to make sure all the points are co-planar once, instead 
-          of on every frame that gets rendered</p>
-          <figure class="mesh__img">
-            <img class="triangles__img" src="img/rabbit.png" alt="rabbit">
-            <img class="triangles__img" src="img/dolphin.png" alt="dolphin">
-          </figure>
-      </article>
+       </article>
 
       <article id="profit">
           <h2>Profit</h2>
@@ -260,8 +260,8 @@
       <ol>
         <a href="#history"><li>A little history.</li></a>
         <a href="#what__is"><li>What is the WebGL?</li></a>
-        <a href="#shaders"><li>Shaders.</li></a>
         <a href="#triangles"><li>Why use triangle?</li></a>
+        <a href="#shaders"><li>Shaders.</li></a>        
         <a href="#profit"><li>Profit.</li></a>
         <a href="#examples"><li>Examples.</li></a>
       </ol>
