@@ -198,5 +198,14 @@ main {
     font-size: 20px;
     line-height: 30px; }
 
+#shaders ol {
+  font-size: 18px;
+  padding-left: 80px;
+  padding-top: 10px;
+  cursor: pointer;
+  outline: none; }
+  #shaders ol li {
+    outline: none; }
+
 #history, #what__is, #shaders, #triangles, #profit {
   margin-bottom: 500px; }
