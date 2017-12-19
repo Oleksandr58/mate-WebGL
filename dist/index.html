@@ -141,12 +141,6 @@
                 </head>
                 <body>
                 <canvas id="canvas" width="760" height="400">Your browser don't support canvas</canvas>
-                <!-- fragment shaders -->
-                <script id="shader-fs" type="x-shader/x-fragment">
-                  void main(void) {
-                    gl_FragColor = vec4(0.86, 0.92, 0.52, 1.0);
-                  }
-                </script>
                 <!-- vertex shaders -->
                 <script id="shader-vs" type="x-shader/x-vertex">
                   attribute vec3 aVertexPosition;
@@ -154,6 +148,12 @@
                     gl_Position = vec4(aVertexPosition, 1.0);
                   }
                 </script>
+                <!-- fragment shaders -->
+                <script id="shader-fs" type="x-shader/x-fragment">
+                  void main(void) {
+                    gl_FragColor = vec4(0.86, 0.92, 0.52, 1.0);
+                  }
+                </script>                
                 <script type="text/javascript">
                 var gl;
                 var shaderProgram;
