@@ -61,6 +61,9 @@ gulp.task('build', ['clean', 'scss', 'img'], function() {
 	var buildIndex = gulp.src('app/index.html')
 	.pipe(gulp.dest('dist'));
 	
+	var buildMusic = gulp.src('app/*.mp3')
+	.pipe(gulp.dest('dist'));
+	
 	var buildHTMLs = gulp.src('app/html/**/*')
 	.pipe(gulp.dest('dist/html'));
 	

@@ -16,4 +16,6 @@ var articles = document.querySelectorAll('article');
 
 function hideMisteryWebGL() {
     document.querySelector('.mistery').style.display = 'none';
+    document.querySelector('#audio').src = 'none';
 }
+
