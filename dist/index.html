@@ -165,14 +165,14 @@
                     var vertexShader = getShader(gl.VERTEX_SHADER, 'shader-vs');
                     // create a program for shaders
                     shaderProgram = gl.createProgram();
-                    // attach shader to Program
+                    // прикрепляем к ней шейдеры
                     gl.attachShader(shaderProgram, vertexShader);
                     gl.attachShader(shaderProgram, fragmentShader);
                     // connect program with webgl's context
                     gl.linkProgram(shaderProgram);
                       
                     if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
-                        alert("We can't install shaders");
+                        alert("Не удалсь установить шейдеры");
                     }
                       
                     gl.useProgram(shaderProgram);
@@ -326,6 +326,8 @@
         <a href="#examples"><li>Examples.</li></a>
       </ol>
     </aside>
+
+    <div class="mistery" onclick="hideMisteryWebGL();"></div>
 
     <script src="js/script.js"></script>    
   </body>

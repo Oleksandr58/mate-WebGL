@@ -202,10 +202,17 @@ main {
   font-size: 18px;
   padding-left: 80px;
   padding-top: 10px;
-  cursor: pointer;
-  outline: none; }
-  #shaders ol li {
-    outline: none; }
+  cursor: pointer; }
 
 #history, #what__is, #shaders, #triangles, #profit {
   margin-bottom: 500px; }
+
+.mistery {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  background: url(../img/mw.jpg) 100% no-repeat/cover;
+  background-position: center; }

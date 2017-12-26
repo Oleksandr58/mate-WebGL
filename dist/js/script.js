@@ -14,3 +14,6 @@ function open__aside() {
 
 var articles = document.querySelectorAll('article');
 
+function hideMisteryWebGL() {
+    document.querySelector('.mistery').style.display = 'none';
+}
